@@ -44,28 +44,40 @@ def dfs(maze: List[List[str]], start: Tuple, goal: Tuple):
     agenda = []
     visited = set()
     visited.add(start)
+    parents = {start: None}
     path = []
     for move in get_moves(start):
         if get_char(maze, move) == ' ':
             agenda.append(move)
             visited.add(move)
+            parents[move] = start
     while agenda:
         current = agenda.pop()
         # print(agenda, "current:", current)
         # print("visited:", visited)
         display_maze(maze, current)
-        sleep(1)
+        # sleep(1)
         for move in get_moves(current):
+            if(move == goal):
+                    path.append(current)
+                    while True:
+                        current = parents[current]
+                        if current == None:
+                            path.insert(0, goal)
+                            return path[::-1]
+                        path.append(current)
+                    
             if move not in visited and get_char(maze, move) == ' ':
+                parents[move] = current
                 agenda.append(move)
                 visited.add(move)
-
+            
     return ("NOT FOUND")
 
 
 
 def main():
     snake, food = get_key_points(example_maze)
-    dfs(example_maze, snake, food)
+    print(dfs(example_maze, snake, food))
 
 main()
