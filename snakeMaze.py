@@ -8,6 +8,14 @@ example_maze =  [['+', '-', '+', '-', '+', '-', '+'],
                  ['|', '$', ' ', ' ', ' ', ' ', '|'],
                  ['+', '-', '+', '-', '+', '-', '+']]
 
+maze2 = [['+', '-', '+', '-', '+', '-', '+'],
+         ['|', ' ', ' ', ' ', ' ', ' ', '|'],
+         ['+', ' ', '+', '-', '+', ' ', '+'],
+         ['|', '  ', ' ', 'F', '|', ' ', '|'],
+         ['+', '-', '+', '-', '+', ' ', '+'],
+         ['|', '$', ' ', ' ', ' ', ' ', '|'],
+         ['+', '-', '+', '-', '+', '-', '+']]
+
 def display_maze(maze: List[List[str]], highlight: Tuple = (999, 999)):
     for y, line in enumerate(maze):
         for x, char in enumerate(line):
@@ -82,7 +90,7 @@ def dfs(maze: List[List[str]], start: Tuple, goal: Tuple):
                             return path[::-1]
                         path.append(current)
                     
-            if move not in visited and get_char(maze, move) == ' ':
+            if move not in visited and get_char(maze, move) == ' ' or get_char(maze, move) == '  ':
                 parents[move] = current
                 agenda.append(move)
                 visited.add(move)
@@ -100,4 +108,4 @@ def main(maze: List[List[str]]):
     dirs = directions_list(solution)
     print(dirs)
 
-main(example_maze)
+main(maze2)
