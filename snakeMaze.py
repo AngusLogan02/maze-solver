@@ -32,13 +32,12 @@ def get_moves(point: Tuple):
     x = point[0]
     y = point[1]
     new_moves = [(x, y+1), (x+1, y), (x, y-1), (x-1, y)]
-    print("possible moves from", point, "are:", new_moves)
     return new_moves
 
 def get_char(maze: List[List[str]], point: Tuple):
     return maze[point[1]][point[0]]
 
-def get_direction(one: Tuple, two: Tuple):
+def get_directions(one: Tuple, two: Tuple):
     x_diff = two[0] - one[0]
     y_diff = two[1] - one[1]
 
@@ -46,10 +45,16 @@ def get_direction(one: Tuple, two: Tuple):
         return "left"
     elif x_diff > 0:
         return "right"
-    elif y_diff > 0:
+    elif y_diff < 0:
         return "up"
     else:
         return "down"
+    
+def directions_list(solution: List[Tuple]):
+    dir_list = []
+    for i in range(0, len(solution)-1):
+        dir_list.append(get_directions(solution[i], solution[i+1]))
+    return dir_list
 
 from time import sleep
 def dfs(maze: List[List[str]], start: Tuple, goal: Tuple):
@@ -66,10 +71,7 @@ def dfs(maze: List[List[str]], start: Tuple, goal: Tuple):
             parents[move] = start
     while agenda:
         current = agenda.pop()
-        # print(agenda, "current:", current)
-        # print("visited:", visited)
         display_maze(maze, current)
-        # sleep(1)
         for move in get_moves(current):
             if(move == goal):
                     path.append(current)
@@ -85,12 +87,17 @@ def dfs(maze: List[List[str]], start: Tuple, goal: Tuple):
                 agenda.append(move)
                 visited.add(move)
             
-    return ("NOT FOUND")
+    return None
 
 
 
-def main():
-    snake, food = get_key_points(example_maze)
-    print(dfs(example_maze, snake, food))
+def main(maze: List[List[str]]):
+    snake, food = get_key_points(maze)
+    solution = dfs(maze, snake, food)
+    if solution is None:
+        print("No solution available")
+        return
+    dirs = directions_list(solution)
+    print(dirs)
 
-main()
+main(example_maze)
