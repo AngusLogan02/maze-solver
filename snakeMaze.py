@@ -38,6 +38,19 @@ def get_moves(point: Tuple):
 def get_char(maze: List[List[str]], point: Tuple):
     return maze[point[1]][point[0]]
 
+def get_direction(one: Tuple, two: Tuple):
+    x_diff = two[0] - one[0]
+    y_diff = two[1] - one[1]
+
+    if x_diff < 0:
+        return "left"
+    elif x_diff > 0:
+        return "right"
+    elif y_diff > 0:
+        return "up"
+    else:
+        return "down"
+
 from time import sleep
 def dfs(maze: List[List[str]], start: Tuple, goal: Tuple):
     # start by checking up, down, left, right of start
