@@ -35,6 +35,9 @@ def get_moves(point: Tuple):
     print("possible moves from", point, "are:", new_moves)
     return new_moves
 
+def get_char(maze: List[List[str]], point: Tuple):
+    return maze[point[0]][point[1]]
+
 from time import sleep
 def dfs(maze: List[List[str]], start: Tuple, goal: Tuple):
     # start by checking up, down, left, right of start
@@ -43,7 +46,7 @@ def dfs(maze: List[List[str]], start: Tuple, goal: Tuple):
     visited.add(start)
     path = []
     for move in get_moves(start):
-        if maze[move[0]][move[1]] == ' ':
+        if get_char(maze, move) == ' ':
             agenda.append(move)
             visited.add(move)
     current = agenda.pop()
@@ -54,9 +57,7 @@ def dfs(maze: List[List[str]], start: Tuple, goal: Tuple):
         display_maze(maze, current)
         sleep(1)
         for move in get_moves(current):
-            if (move == (5, 1)):
-                print(agenda, visited, maze[1][5])
-            if move not in visited and maze[move[1]][move[0]] == ' ':
+            if move not in visited and get_char(maze, move) == ' ':
                 agenda.append(move)
                 visited.add(move)
 
