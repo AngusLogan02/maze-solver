@@ -36,7 +36,7 @@ def get_moves(point: Tuple):
     return new_moves
 
 def get_char(maze: List[List[str]], point: Tuple):
-    return maze[point[0]][point[1]]
+    return maze[point[1]][point[0]]
 
 from time import sleep
 def dfs(maze: List[List[str]], start: Tuple, goal: Tuple):
@@ -49,8 +49,7 @@ def dfs(maze: List[List[str]], start: Tuple, goal: Tuple):
         if get_char(maze, move) == ' ':
             agenda.append(move)
             visited.add(move)
-    current = agenda.pop()
-    while current != goal:
+    while agenda:
         current = agenda.pop()
         # print(agenda, "current:", current)
         # print("visited:", visited)
@@ -61,10 +60,11 @@ def dfs(maze: List[List[str]], start: Tuple, goal: Tuple):
                 agenda.append(move)
                 visited.add(move)
 
+    return ("NOT FOUND")
+
 
 
 def main():
-    display_maze(example_maze)
     snake, food = get_key_points(example_maze)
     dfs(example_maze, snake, food)
 
