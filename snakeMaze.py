@@ -1,4 +1,5 @@
 from typing import List, Tuple
+from os import system
 
 example_maze =  [['+', '-', '+', '-', '+', '-', '+'],
                  ['|', ' ', ' ', ' ', ' ', ' ', '|'],
@@ -16,8 +17,8 @@ maze2 = [['+', '-', '+', '-', '+', '-', '+'],
          ['|', '$', ' ', ' ', ' ', ' ', '|'],
          ['+', '-', '+', '-', '+', '-', '+']]
 
-maze3 = [list("___________________________________F "),
-        list("| _____ |   | ___ | ___ ___ | |   | |"),
+maze3 =[list("____________________________________ "),
+        list("| _____ |   | ___ | ___ ___ | |   |F|"),
         list("| |   | |_| |__ | |_| __|____ | | | |"),
         list("| | | |_________|__ |______ |___|_| |"),
         list("| |_|   | _______ |______ |   | ____|"),
@@ -26,8 +27,8 @@ maze3 = [list("___________________________________F "),
         list("|   ________| | |__ | |______ | | | |"),
         list("| | | ________| | __|____ | | | __| |"),
         list("|_| |__ |   | __|__ | ____| | |_| __|"),
-        list("|   ____| | |____ | |__ |   |__ |__ |"),
-        list("|$|_______|_______|___|___|___|_____|")]
+        list("|$  ____| | |____ | |__ |   |__ |__ |"),
+        list("|_|_______|_______|___|___|___|_____|")]
 
 def display_maze(maze: List[List[str]], highlight: Tuple = (999, 999)):
     for y, line in enumerate(maze):
@@ -91,6 +92,8 @@ def dfs(maze: List[List[str]], start: Tuple, goal: Tuple):
             visited.add(move)
             parents[move] = start
     while agenda:
+        sleep(1)
+        system('clear')
         current = agenda.pop()
         display_maze(maze, current)
         for move in get_moves(current):
@@ -121,4 +124,4 @@ def main(maze: List[List[str]]):
     dirs = directions_list(solution)
     print(dirs)
 
-main(maze2)
+main(maze3)
